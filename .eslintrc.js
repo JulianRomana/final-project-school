@@ -12,7 +12,8 @@ module.exports = {
   env: {
     browser: true,
     es6: true,
-    jest: true,
+    node: true,
+    jest: false,
   },
   parserOptions: {
     ecmaVersion: 2020,
@@ -30,7 +31,5 @@ module.exports = {
   },
   rules: {
     'react/prop-types': 'off',
-    '@typescript-eslint/explicit-function-return-type': 'off',
-    '@typescript-eslint/no-var-requires': 'off',
   },
 }
