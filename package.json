@@ -5,6 +5,7 @@
     "dev": "vite",
     "build": "tsc && vite build",
     "serve": "vite preview",
+    "format": "prettier --write '**/*.{js,jsx,ts,tsx,json,md}'",
     "lint": "eslint '**/*.{ts,tsx}' --fix"
   },
   "dependencies": {
