@@ -8,10 +8,10 @@ export default defineConfig({
     },
     colors: {
       blue: {
-        DEFAULT: '#0703D4',
-        75: '#0703d4bf',
-        50: '#0703d480',
-        25: '#0703d440',
+        DEFAULT: '#0071B6',
+        75: '#0071B6bf',
+        50: '#0071B680',
+        25: '#0071B640',
       },
       orange: {
         DEFAULT: '#ff4800',
