@@ -1,6 +1,7 @@
-module.exports = {
-  purge: ['./src/**/*.{js,jsx,ts,tsx}'],
-  darkMode: false,
+import { defineConfig } from 'windicss/helpers'
+
+export default defineConfig({
+  darkMode: 'class',
   theme: {
     fontFamily: {
       sans: 'Work Sans, sans-serif',
@@ -45,10 +46,6 @@ module.exports = {
         lg: '2rem',
       },
     },
-    extend: {},
-  },
-  variants: {
-    extend: {},
   },
   plugins: [],
-}
+})
