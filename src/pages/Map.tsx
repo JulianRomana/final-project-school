@@ -1,17 +1,46 @@
 import React, { FC } from 'react'
-import map from '../assets/map.svg'
-import { MapContainer, TileLayer } from 'react-leaflet'
+import {
+  MapContainer,
+  ImageOverlay,
+  Marker,
+  Popup,
+  MapContainerProps,
+} from 'react-leaflet'
+import { LatLngBoundsExpression, CRS } from 'leaflet'
+import map from '../assets/map.png'
+import 'leaflet/dist/leaflet.css'
+
+const bounds: LatLngBoundsExpression = [
+  [0, 0],
+  [1000, 1000],
+]
+
+const mapConfig: MapContainerProps = {
+  className: 'h-full',
+  center: [700, 500],
+  zoom: 1,
+  crs: CRS.Simple,
+  maxZoom: 3,
+  scrollWheelZoom: false,
+  maxBounds: bounds,
+}
 
 const MapPage: FC = () => {
   return (
-    <MapContainer
-      center={[0, 0]}
-      zoom={1}
-      scrollWheelZoom={false}
-      className='h-screen'
-    >
-      <TileLayer url={map} tileSize={600} />
-    </MapContainer>
+    <div className='w-full h-screen'>
+      <MapContainer {...mapConfig}>
+        <ImageOverlay
+          attribution='&copy; <a href="http://osm.org/copyright">OpenStreetMap</a> contributors'
+          url={map}
+          bounds={bounds}
+        />
+        <Marker position={[1000, 2000]}>
+          <Popup>
+            A pretty CSS3 popup. <br /> Easily customizable.
+          </Popup>
+        </Marker>
+      </MapContainer>
+    </div>
   )
 }
 
