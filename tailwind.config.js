@@ -38,6 +38,13 @@ module.exports = {
       dorian: '#ecf1f4',
       cloud: '#fafcfe',
     },
+    container: {
+      center: true,
+      padding: {
+        DEFAULT: '1rem',
+        lg: '2rem',
+      },
+    },
     extend: {},
   },
   variants: {

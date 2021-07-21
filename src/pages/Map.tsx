@@ -1,14 +1,14 @@
+import { CRS, LatLngBoundsExpression } from 'leaflet'
+import 'leaflet/dist/leaflet.css'
 import React, { FC } from 'react'
 import {
-  MapContainer,
   ImageOverlay,
+  MapContainer,
+  MapContainerProps,
   Marker,
   Popup,
-  MapContainerProps,
 } from 'react-leaflet'
-import { LatLngBoundsExpression, CRS } from 'leaflet'
 import map from '../assets/map.png'
-import 'leaflet/dist/leaflet.css'
 
 const bounds: LatLngBoundsExpression = [
   [0, 0],
