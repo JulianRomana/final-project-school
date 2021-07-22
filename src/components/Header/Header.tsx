@@ -10,7 +10,9 @@ const Header: FC = () => {
 
   return (
     <div className='h-14 items-center px-4 w-full grid grid-cols-3'>
-      {location.pathname !== Routes.LOGIN && (
+      {![Routes.LOGIN, Routes.DASHBOARD]
+        .toString()
+        .includes(location.pathname) && (
         <a onClick={() => history.goBack()} className='cursor-pointer'>
           <img src={BackIcon} alt='Back button icon' className='h-5' />
         </a>
