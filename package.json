@@ -12,6 +12,7 @@
   "dependencies": {
     "@fontsource/work-sans": "^4.5.0",
     "axios": "^0.21.1",
+    "date-fns": "^2.22.1",
     "leaflet": "^1.7.1",
     "react": "^17.0.0",
     "react-dom": "^17.0.0",
