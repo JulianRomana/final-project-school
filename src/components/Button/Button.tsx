@@ -1,13 +1,19 @@
 import React, { FC } from 'react'
 
 interface ButtonProps {
-  readonly type?: string
-  readonly label?: string
+  readonly children: string
+  readonly block?: boolean
+  readonly onClick?: () => void
 }
 
-const Button: FC<ButtonProps> = ({ children }) => {
+const Button: FC<ButtonProps> = ({ children, onClick, block = false }) => {
   return (
-    <button className='w-full h-12 transition-all duration-200 rounded-lg bg-blue text-cloud font-bold uppercase active:(ring-blue-50 ring-4)'>
+    <button
+      onClick={onClick}
+      className={`w-${
+        block ? 'full' : 'auto'
+      } h-12 px-8 transition-all duration-200 rounded-lg bg-blue text-cloud font-bold uppercase active:(ring-blue-50 ring-4)`}
+    >
       {children}
     </button>
   )

@@ -7,6 +7,7 @@ export default defineConfig({
       sans: 'Work Sans, sans-serif',
     },
     colors: {
+      transparent: 'transparent',
       blue: {
         DEFAULT: '#0071B6',
         75: '#0071B6bf',
