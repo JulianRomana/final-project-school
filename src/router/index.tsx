@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { BrowserRouter, Route, Switch } from 'react-router-dom'
+import { Route, Switch } from 'react-router-dom'
 import { Routes } from '../enums/router.enum'
 import DashboardPage from '../pages/Dashboard'
 import HomePage from '../pages/Home'
@@ -15,15 +15,13 @@ const routes = [
 
 const Router: FC = () => {
   return (
-    <BrowserRouter>
-      <Switch>
-        {routes.map((route, index) => (
-          <Route key={`Route_${index}`} path={route.to} exact>
-            {route.component}
-          </Route>
-        ))}
-      </Switch>
-    </BrowserRouter>
+    <Switch>
+      {routes.map((route, index) => (
+        <Route key={`Route_${index}`} path={route.to} exact>
+          {route.component}
+        </Route>
+      ))}
+    </Switch>
   )
 }
 
