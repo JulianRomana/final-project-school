@@ -1,13 +1,7 @@
 import { CRS, LatLngBoundsExpression } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import React, { FC } from 'react'
-import {
-  ImageOverlay,
-  MapContainer,
-  MapContainerProps,
-  Marker,
-  Popup,
-} from 'react-leaflet'
+import { ImageOverlay, MapContainer, MapContainerProps, Marker, Popup } from 'react-leaflet'
 import map from '../assets/map.png'
 
 const bounds: LatLngBoundsExpression = [

@@ -30,29 +30,18 @@ const DashboardPage: FC = () => {
       <div className='relative pb-48'>
         <h1 className='flex mt-2'>
           <img src={AlertTitleIcon} alt='Alert title icon' className='mr-2' />
-          <span className='text-onyx text-2xl font-bold tracking-[-2%]'>
-            Alertes
-          </span>
+          <span className='text-onyx text-2xl font-bold tracking-[-2%]'>Alertes</span>
         </h1>
         <div className='my-4 space-y-4'>
           {toastAlerts.map((alert, index) => (
-            <ToastAlert
-              key={`Alert_${index}`}
-              name={alert.name}
-              location={alert.location}
-              date={alert.date}
-            />
+            <ToastAlert key={`Alert_${index}`} name={alert.name} location={alert.location} date={alert.date} />
           ))}
         </div>
         <div className='grid grid-cols-2 gap-8 p-4'>
           <ButtonBlock img={MaintenanceIcon}>Maintenance</ButtonBlock>
           <ButtonBlock img={HistoryIcon}>Historique</ButtonBlock>
         </div>
-        <img
-          src={DashboardIllustration}
-          alt='Dashboard illustration'
-          className='absolute bottom-0 right-0'
-        />
+        <img src={DashboardIllustration} alt='Dashboard illustration' className='absolute bottom-0 right-0' />
       </div>
     </div>
   )

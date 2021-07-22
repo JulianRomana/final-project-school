@@ -10,28 +10,14 @@ const LoginPage: FC = () => {
     <div className='container'>
       <div className='relative pt-24 pb-44'>
         <div className='space-y-4'>
-          <h1 className='text-blue text-2xl font-bold tracking-[-2%]'>
-            Bienvenue sur Fleux
-          </h1>
+          <h1 className='text-blue text-2xl font-bold tracking-[-2%]'>Bienvenue sur Fleux</h1>
           <Input id='email' type='email' label='Identifiant' />
           <Input id='password' type='password' label='Mot de passe' />
           <Button>Se connecter</Button>
         </div>
-        <img
-          src={Illustration1}
-          alt='Illustration 1'
-          className='absolute -top-14 left-4 pointer-events-none'
-        />
-        <img
-          src={Illustration2}
-          alt='Illustration 2'
-          className='absolute -top-14 right-4 pointer-events-none'
-        />
-        <img
-          src={Illustration3}
-          alt='Illustration 3'
-          className='absolute bottom-0 right-0'
-        />
+        <img src={Illustration1} alt='Illustration 1' className='absolute -top-14 left-4 pointer-events-none' />
+        <img src={Illustration2} alt='Illustration 2' className='absolute -top-14 right-4 pointer-events-none' />
+        <img src={Illustration3} alt='Illustration 3' className='absolute bottom-0 right-0' />
       </div>
     </div>
   )
