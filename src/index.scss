@@ -1,3 +1,7 @@
 body {
   @apply bg-cloud text-onyx antialiased;
 }
+
+button {
+  outline: unset !important;
+}
