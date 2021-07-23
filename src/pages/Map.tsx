@@ -1,7 +1,10 @@
-import { CRS, LatLngBoundsExpression } from 'leaflet'
+import { CRS, Icon, LatLngBoundsExpression } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import React, { FC, useRef, useState } from 'react'
+import React, { FC, useEffect, useRef, useState } from 'react'
 import { ImageOverlay, MapContainer, MapContainerProps, Marker, Popup } from 'react-leaflet'
+import { useHistory } from 'react-router-dom'
+import alarmIcon from '../assets/alarmIcon.svg'
+import extinguisherIcon from '../assets/extinguisherIcon.svg'
 import AlertIcon from '../assets/images/alert.svg'
 import ClockIcon from '../assets/images/clock.svg'
 import map from '../assets/map.png'
@@ -10,6 +13,7 @@ import ButtonIcon from '../components/Button/ButtonIcon'
 import MapAlertMenu from '../components/Map/MapAlertMenu'
 import MapFilterMenu from '../components/Map/MapFilterMenu'
 import MapHistoryMenu from '../components/Map/MapHistoryMenu'
+import axios from '../config/axios'
 
 const bounds: LatLngBoundsExpression = [
   [0, 0],
@@ -26,6 +30,18 @@ const mapConfig: MapContainerProps = {
   maxBounds: bounds,
 }
 
+const generateIcon = (name: string): Icon => {
+  const icons: Record<string, string> = {
+    Flexibility: extinguisherIcon,
+    Luminosity: alarmIcon,
+    Proximity: extinguisherIcon,
+  }
+
+  return new Icon({
+    iconUrl: icons[name],
+    iconSize: [25, 25],
+  })
+}
 const alerts = [
   {
     name: 'Extincteur déplomber',
@@ -77,6 +93,15 @@ const histories = [
   },
 ]
 
+interface nodesType {
+  coordinates: {
+    x: number
+    y: number
+  }
+  _measurement: string
+  topic: string
+}
+
 const MapPage: FC = () => {
   const [filters, setFilters] = useState<string[]>([])
   const [showFilterMenu, setShowFilterMenu] = useState(false)
@@ -85,7 +110,24 @@ const MapPage: FC = () => {
   const [filterTimeline, setFilterTimeline] = useState<gsap.core.Timeline>()
   const [alertTimeline, setAlertTimeline] = useState<gsap.core.Timeline>()
   const [historyTimeline, setHistoryTimeline] = useState<gsap.core.Timeline>()
+  const [isLoading, setIsLoading] = useState(false)
+  const [nodes, setNodes] = useState<nodesType[]>([])
+  const history = useHistory()
   const filterButton = useRef<HTMLDivElement>(null)
+
+  useEffect(() => {
+    ;(async () => {
+      try {
+        setIsLoading(true)
+        const { data } = await axios.get('/influx')
+        setNodes(data.data)
+      } catch (err) {
+        history.push('map')
+      } finally {
+        setIsLoading(false)
+      }
+    })()
+  }, [history])
 
   const handleFilterMenu = (): void => {
     closeAlertMenu()
@@ -135,46 +177,55 @@ const MapPage: FC = () => {
   }
 
   return (
-    <div className='w-full h-[calc(100vh - 56px)] relative overflow-hidden' style={{ height: 'calc(100vh - 56px)' }}>
-      <MapContainer {...mapConfig}>
-        <ImageOverlay url={map} bounds={bounds} />
-        <Marker position={[349, 210]}>
-          <Popup>
-            A pretty CSS3 popup. <br /> Easily customizable.
-          </Popup>
-        </Marker>
-      </MapContainer>
-      <div className='absolute top-4 right-4 flex flex-col space-y-4' style={{ zIndex: 9999999999 }}>
-        <ButtonIcon icon={AlertIcon} onClick={handleAlertMenu} />
-        <ButtonIcon icon={ClockIcon} onClick={handleHistoryMenu} />
-      </div>
-      <div
-        ref={filterButton}
-        className='fixed bottom-4 transform -translate-x-1/2 left-1/2'
-        style={{ zIndex: 9999999999 }}
-      >
-        <Button onClick={handleFilterMenu}>Filtrer</Button>
-      </div>
-      <MapFilterMenu
-        active={showFilterMenu}
-        filters={filters}
-        handFilter={handFilter}
-        setFilterTimeline={setFilterTimeline}
-        closeFilterMenu={closeFilterMenu}
-      />
-      <MapAlertMenu
-        active={showAlertMenu}
-        alerts={alerts}
-        setAlertTimeline={setAlertTimeline}
-        closeAlertMenu={closeAlertMenu}
-      />
-      <MapHistoryMenu
-        active={showHistoryMenu}
-        histories={histories}
-        setHistoryTimeline={setHistoryTimeline}
-        closeHistoryMenu={closeHistoryMenu}
-      />
-    </div>
+    <>
+      {!isLoading && (
+        <div
+          className='w-full h-[calc(100vh - 56px)] relative overflow-hidden'
+          style={{ height: 'calc(100vh - 56px)' }}
+        >
+          <MapContainer {...mapConfig}>
+            <ImageOverlay url={map} bounds={bounds} />
+            {nodes.map(({ coordinates, topic, _measurement }) => (
+              <Marker key={topic} position={[coordinates.y, coordinates.x]} icon={generateIcon(_measurement)}>
+                <Popup>
+                  A pretty CSS3 popup. <br /> Easily customizable.
+                </Popup>
+              </Marker>
+            ))}
+          </MapContainer>
+          <div className='absolute top-4 right-4 flex flex-col space-y-4' style={{ zIndex: 9999999999 }}>
+            <ButtonIcon icon={AlertIcon} onClick={handleAlertMenu} />
+            <ButtonIcon icon={ClockIcon} onClick={handleHistoryMenu} />
+          </div>
+          <div
+            ref={filterButton}
+            className='fixed bottom-4 transform -translate-x-1/2 left-1/2'
+            style={{ zIndex: 9999999999 }}
+          >
+            <Button onClick={handleFilterMenu}>Filtrer</Button>
+          </div>
+          <MapFilterMenu
+            active={showFilterMenu}
+            filters={filters}
+            handFilter={handFilter}
+            setFilterTimeline={setFilterTimeline}
+            closeFilterMenu={closeFilterMenu}
+          />
+          <MapAlertMenu
+            active={showAlertMenu}
+            alerts={alerts}
+            setAlertTimeline={setAlertTimeline}
+            closeAlertMenu={closeAlertMenu}
+          />
+          <MapHistoryMenu
+            active={showHistoryMenu}
+            histories={histories}
+            setHistoryTimeline={setHistoryTimeline}
+            closeHistoryMenu={closeHistoryMenu}
+          />
+        </div>
+      )}
+    </>
   )
 }
 

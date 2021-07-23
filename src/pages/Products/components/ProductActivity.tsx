@@ -32,8 +32,8 @@ const ProductActivity: FC<ProductActivityProps> = ({ activity, isDetector }) => 
     <div className='mt-5'>
       <h3 className='mb-2 font-bold'>Historique D’activité</h3>
       <div className='space-y-3'>
-        {activity.map(({ _time, nodeId }) => (
-          <div key={nodeId} className='p-2 bg-cloud flex items-center rounded-md '>
+        {activity.map(({ _time }) => (
+          <div key={_time} className='p-2 bg-cloud flex items-center rounded-md '>
             <img src={isDetector ? warningIcon : fireIcon} alt='warning icon' />
             <div className='ml-3'>
               <span className='font-medium'>
