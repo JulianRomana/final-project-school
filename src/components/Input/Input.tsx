@@ -18,7 +18,15 @@ const Input: FC<InputProps> = ({ id, label, type }) => {
         type={type ?? 'text'}
         name={id}
         id={id}
-        className='w-full rounded-lg h-12 text-stale transition-all duration-200 border-stale-light bg-dorian focus:(ring-blue-50 ring-4 bg-cloud) valid:(bg-cloud)'
+        className='w-full
+          rounded-lg
+          h-12
+          text-stale
+          transition-all
+          duration-200
+          border-stale-light
+          bg-dorian
+          focus:(ring-blue-50 ring-4 bg-cloud) valid:(bg-cloud)'
         required
       />
     </div>
