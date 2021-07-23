@@ -2,7 +2,7 @@ import React, { FC } from 'react'
 import { Link, useHistory, useLocation } from 'react-router-dom'
 import BackIcon from '../../assets/images/back.svg'
 import Logo from '../../assets/images/logo.svg'
-import { Routes } from '../../enums/router.enum'
+import { Routes } from '../../enums/router'
 
 const Header: FC = () => {
   const location = useLocation()

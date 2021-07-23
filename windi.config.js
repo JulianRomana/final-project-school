@@ -38,7 +38,7 @@ export default defineConfig({
         light: '#8c8ca1',
       },
       dorian: '#ecf1f4',
-      cloud: '#fafcfe',
+      cloud: '#F6FCFF',
     },
     container: {
       center: true,

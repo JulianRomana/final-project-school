@@ -1,10 +1,10 @@
 import React, { FC, useState } from 'react'
-import AlertTitleIcon from '../assets/images/alert.svg'
-import DashboardIllustration from '../assets/images/dashboard-illustration.svg'
-import HistoryIcon from '../assets/images/history.svg'
-import MaintenanceIcon from '../assets/images/maintenance.svg'
-import ButtonBlock from '../components/Button/ButtonBlock'
-import ToastAlert from '../components/Toast/ToastAlert'
+import AlertTitleIcon from '/@/assets/images/alert.svg'
+import DashboardIllustration from '/@/assets/images/dashboard-illustration.svg'
+import HistoryIcon from '/@/assets/images/history.svg'
+import MaintenanceIcon from '/@/assets/images/maintenance.svg'
+import { ButtonBlock } from '/@/components/Button'
+import { ToastAlert } from '/@/components/Toast'
 
 const DashboardPage: FC = () => {
   const [toastAlerts, setToastAlerts] = useState([
