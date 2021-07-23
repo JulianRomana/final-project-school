@@ -9,7 +9,7 @@ interface ProductDetailsProps {
     lastModifiedDate: string
     details: string[]
     usage: string
-    nodeName: string
+    name: string
   }
   readonly isDetector: boolean
 }
@@ -23,7 +23,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
         <div className={`text-sm font-font-bold ${isDetector ? 'text-blue' : 'text-orange'}`}>
           {isDetector ? 'DETECTEUR' : 'EXTINCTEUR'}
         </div>
-        <div className='text-sm'>{product.nodeName}</div>
+        <div className='text-sm'>{product.name}</div>
         <div className='text-stale-light my-4 font-bold'>N°{product.sensorId}</div>
         <img className='justify-center self-center mb-4' src={illu} alt='illustration' />
         <div

@@ -1,14 +1,25 @@
+import { format } from 'date-fns'
+import fr from 'date-fns/esm/locale/fr/index.js'
 import React, { FC } from 'react'
 import fireIcon from '/@/assets/fire.svg'
 import warningIcon from '/@/assets/warning.svg'
 
+/* 
+  "_time": "2021-07-23T14:24:17.388788Z",
+"_value": 9280.55,
+"_measurement": "Luminosity",
+"name": "BU",
+"nodeId": 8364979,
+"topic": "WEB3-GROUPE7/8364979/121",
+"sensorId": 121,
+"isActive": false */
 interface ProductActivityProps {
   readonly activity: {
     _time: string
     _value: number
     _measurement: string
     nodeId: string
-    nodeName: string
+    name: string
     sensorId: number
     topic: string
     isActive: boolean
@@ -28,7 +39,7 @@ const ProductActivity: FC<ProductActivityProps> = ({ activity, isDetector }) => 
               <span className='font-medium'>
                 {isDetector ? "L'alarme a été déclenchée" : "L'extincteur a été déplacé"}
               </span>
-              <div> {_time} </div>
+              <div> {format(new Date(_time), 'd MMM yyyy hh:mm', { locale: fr })} </div>
             </div>
           </div>
         ))}
