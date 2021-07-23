@@ -11,20 +11,20 @@ interface ToastAlertProps {
 
 const ToastAlert: FC<ToastAlertProps> = ({ name, location, date }) => {
   return (
-    <div className='w-full h-14 rounded-lg bg-yellow-25 border-yellow border-2  text-xs p-2 shadow-sm'>
+    <div className='w-full rounded-lg bg-yellow-25 border-yellow border-2 p-2 shadow-sm'>
       <div className='flex justify-between'>
         <div className='flex'>
-          <img src={ToastAlertIcon} alt='Toast alert icon' className='h-5 mr-2' />
-          <div className=''>
-            <h3 className='font-bold uppercase'>{name}</h3>
-            <p className='text-stale'>{location}</p>
+          <img src={ToastAlertIcon} alt='Toast alert icon' className='h-6 mr-2' />
+          <div className='text-sm'>
+            <h3 className='uppercase'>{name}</h3>
+            <p className='text-stale-light'>{location}</p>
           </div>
         </div>
-        <div className='flex flex-col items-end justify-end text-right'>
-          <img src={ToastCloseIcon} alt='Toast close icon' className='h-[6px] w-[6px] mb-1 cursor-pointer' />
-          <div className='leading-[14px]'>
-            <p className='text-onyx font-bold'>{format(new Date(date), 'HH:mm')}</p>
-            <p className='text-stale'>{format(new Date(date), 'dd/MM/yyyy')}</p>
+        <div className='flex flex-col items-end justify-between text-right'>
+          <img src={ToastCloseIcon} alt='Toast close icon' className='h-3 w-3 cursor-pointer' />
+          <div className='leading-[14px] mt-2'>
+            <p className='text-onyx'>{format(new Date(date), 'HH:mm')}</p>
+            <p className='text-stale-light'>{format(new Date(date), 'dd/MM/yyyy')}</p>
           </div>
         </div>
       </div>
