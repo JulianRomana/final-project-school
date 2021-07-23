@@ -5,7 +5,7 @@ import Illustration2 from '../assets/images/illustration-2.svg'
 import Illustration3 from '../assets/images/illustration-3.svg'
 import Button from '../components/Button/Button'
 import Input from '../components/Input/Input'
-import { Routes } from '../enums/router.enum'
+import { Routes } from '../enums/router'
 
 const LoginPage: FC = () => {
   return (

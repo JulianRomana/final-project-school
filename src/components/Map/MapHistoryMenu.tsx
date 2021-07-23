@@ -67,9 +67,7 @@ const MapHistoryMenu: FC<MapHistoryMenuProps> = ({ active, histories, setHistory
           </div>
         </div>
       </div>
-      <div ref={background} className='bg-cloud absolute inset-0 z-10 transform scale-y-0'>
-        <div className='absolute inset-0 bg-blue bg-opacity-20'></div>
-      </div>
+      <div ref={background} className='bg-cyan absolute inset-0 z-10 transform scale-y-0'></div>
     </div>
   )
 }

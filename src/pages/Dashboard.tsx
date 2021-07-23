@@ -28,7 +28,7 @@ const DashboardPage: FC = () => {
   return (
     <div className='container'>
       <div className='relative pb-48'>
-        <h1 className='flex mt-2'>
+        <h1 className='flex mt-4'>
           <img src={AlertTitleIcon} alt='Alert title icon' className='mr-2' />
           <span className='text-onyx text-2xl tracking-[-2%]'>Alertes</span>
         </h1>

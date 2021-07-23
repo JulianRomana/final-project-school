@@ -14,6 +14,7 @@ export default defineConfig({
         50: '#0071B680',
         25: '#0071B640',
       },
+      cyan: '#F6FCFF',
       orange: {
         DEFAULT: '#ff4800',
         75: '#ff4800bf',

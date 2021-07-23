@@ -62,7 +62,7 @@ const MapAlertMenu: FC<MapAlertMenuProps> = ({ active, alerts, setAlertTimeline,
           ))}
         </div>
       </div>
-      <div ref={background} className='bg-cloud absolute inset-0 z-10 transform scale-x-0'></div>
+      <div ref={background} className='bg-cyan absolute inset-0 z-10 transform scale-x-0'></div>
     </div>
   )
 }

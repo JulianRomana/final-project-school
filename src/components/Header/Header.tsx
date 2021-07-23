@@ -9,7 +9,11 @@ const Header: FC = () => {
   const history = useHistory()
 
   return (
-    <div className='h-14 items-center px-4 w-full grid grid-cols-3'>
+    <div
+      className={`h-14 items-center px-4 w-full grid grid-cols-3 ${
+        Routes.LOGIN === location.pathname ? '' : 'bg-cloud shadow'
+      }`}
+    >
       {![Routes.LOGIN, Routes.DASHBOARD].toString().includes(location.pathname) && (
         <a onClick={() => history.goBack()} className='cursor-pointer contents'>
           <img src={BackIcon} alt='Back button icon' className='h-5' />
