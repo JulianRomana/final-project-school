@@ -1,9 +1,11 @@
 import React, { FC } from 'react'
+import { Link } from 'react-router-dom'
 import Illustration1 from '../assets/images/illustration-1.svg'
 import Illustration2 from '../assets/images/illustration-2.svg'
 import Illustration3 from '../assets/images/illustration-3.svg'
 import Button from '../components/Button/Button'
 import Input from '../components/Input/Input'
+import { Routes } from '../enums/router.enum'
 
 const LoginPage: FC = () => {
   return (
@@ -14,6 +16,12 @@ const LoginPage: FC = () => {
           <Input id='email' type='email' label='Identifiant' />
           <Input id='password' type='password' label='Mot de passe' />
           <Button block>Se connecter</Button>
+
+          <div className='mt-4 text-center'>
+            <Link to={Routes.MAP} className='font-bold text-blue uppercase'>
+              Se connecter en tant qu’invité
+            </Link>
+          </div>
         </div>
         <img src={Illustration1} alt='Illustration 1' className='absolute -top-14 left-4 pointer-events-none' />
         <img src={Illustration2} alt='Illustration 2' className='absolute -top-14 right-4 pointer-events-none' />
