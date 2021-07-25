@@ -1,10 +1,10 @@
 import { gsap } from 'gsap'
 import 'leaflet/dist/leaflet.css'
 import React, { FC, useEffect, useRef } from 'react'
-import CloseWhiteIcon from '../../assets/images/close-white.svg'
-import DetectorIcon from '../../assets/images/detector.svg'
-import ExtinguisherIcon from '../../assets/images/extinguisher.svg'
-import ButtonFilter from '../../components/Button/ButtonFilter'
+import CloseWhiteIcon from '/@/assets/images/close-white.svg'
+import DetectorIcon from '/@/assets/images/detector.svg'
+import ExtinguisherIcon from '/@/assets/images/extinguisher.svg'
+import ButtonFilter from '/@/components/Button/ButtonFilter'
 
 const filterList = [
   { name: 'offline', label: 'Hors-service', color: 'bg-cloud' },

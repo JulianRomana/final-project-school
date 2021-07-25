@@ -1,7 +1,7 @@
 import { gsap } from 'gsap'
 import React, { FC, useEffect, useRef } from 'react'
-import CloseBlackIcon from '../../assets/images/close-black.svg'
-import HistoryCard from '../HistoryCard/HistoryCard'
+import CloseBlackIcon from '/@/assets/images/close-black.svg'
+import { HistoryCard } from '/@/components/HistoryCard'
 
 interface MapHistoryMenuProps {
   readonly active: boolean

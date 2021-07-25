@@ -1,8 +1,8 @@
 import { gsap } from 'gsap'
 import React, { FC, useEffect, useRef } from 'react'
-import AlertIcon from '../../assets/images/alert.svg'
-import CloseBlackIcon from '../../assets/images/close-black.svg'
-import ToastAlert from '../Toast/ToastAlert'
+import AlertIcon from '/@/assets/images/alert.svg'
+import CloseBlackIcon from '/@/assets/images/close-black.svg'
+import ToastAlert from '/@/components/Toast/ToastAlert'
 
 interface MapAlertMenuProps {
   readonly active: boolean

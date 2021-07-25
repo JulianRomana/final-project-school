@@ -1,44 +1,34 @@
-import { format } from 'date-fns'
 import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import ProductActivity from './components/ProductActivity'
 import ProductDetails from './components/ProductDetails'
 import axios from '/@/config/axios'
+import { ProductInfos } from '/@/types'
 
 const Product: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [activity, setActivity] = useState([])
+  const [productInfos, setProductInfos] = useState<ProductInfos>()
 
-  const { pathname } = useLocation()
+  const { state } = useLocation<Record<string, string>>()
   const history = useHistory()
 
-  const isDetector = pathname.includes('detector')
-
-  const mock = {
-    sensorId: 124,
-    isActive: true,
-    nodeId: 8364979,
-    name: 'BU',
-    nodeName: 'VEIL',
-    _measurement: 'Flexibility',
-    lastModifiedDate: format(new Date(), 'd/MM/yyyy'),
-    details: ['type: CO2', 'class AB'],
-    usage: 'Pour tous types de feu',
-  }
+  const isDetector = location.pathname.includes('detector')
 
   useEffect(() => {
     ;(async () => {
       try {
         setIsLoading(true)
-        const { data } = await axios.get('/influx/filter?area=BU&sensor=Luminosity&sortBy=_time')
+        const { data } = await axios.get(`/influx/filter?area=${state.name}&sensor=${state._measurement}&sortBy=_time`)
         setActivity(data.data)
+        setProductInfos(data.data[0])
       } catch (err) {
         history.push('map')
       } finally {
         setIsLoading(false)
       }
     })()
-  }, [history])
+  }, [history, state])
 
   return (
     <section className='container'>
@@ -46,7 +36,7 @@ const Product: FC = () => {
         <div> isLoading </div>
       ) : (
         <>
-          <ProductDetails product={mock} isDetector={isDetector} />
+          {productInfos && <ProductDetails product={productInfos} isDetector={isDetector} />}
           <ProductActivity activity={activity} isDetector={isDetector} />
         </>
       )}

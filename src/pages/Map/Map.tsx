@@ -1,19 +1,16 @@
 import { CRS, Icon, LatLngBoundsExpression } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
 import React, { FC, useEffect, useRef, useState } from 'react'
-import { ImageOverlay, MapContainer, MapContainerProps, Marker, Popup } from 'react-leaflet'
+import { ImageOverlay, MapContainer, MapContainerProps, Marker } from 'react-leaflet'
 import { useHistory } from 'react-router-dom'
-import alarmIcon from '../assets/alarmIcon.svg'
-import extinguisherIcon from '../assets/extinguisherIcon.svg'
-import AlertIcon from '../assets/images/alert.svg'
-import ClockIcon from '../assets/images/clock.svg'
-import map from '../assets/map.png'
-import Button from '../components/Button/Button'
-import ButtonIcon from '../components/Button/ButtonIcon'
-import MapAlertMenu from '../components/Map/MapAlertMenu'
-import MapFilterMenu from '../components/Map/MapFilterMenu'
-import MapHistoryMenu from '../components/Map/MapHistoryMenu'
-import axios from '../config/axios'
+import { MapAlertMenu, MapFilterMenu, MapHistoryMenu } from './components'
+import alarmIcon from '/@/assets/alarmIcon.svg'
+import extinguisherIcon from '/@/assets/extinguisherIcon.svg'
+import AlertIcon from '/@/assets/images/alert.svg'
+import ClockIcon from '/@/assets/images/clock.svg'
+import map from '/@/assets/map.png'
+import { Button, ButtonIcon } from '/@/components/Button'
+import axios from '/@/config/axios'
 
 const bounds: LatLngBoundsExpression = [
   [0, 0],
@@ -30,18 +27,18 @@ const mapConfig: MapContainerProps = {
   maxBounds: bounds,
 }
 
-const generateIcon = (name: string): Icon => {
-  const icons: Record<string, string> = {
-    Flexibility: extinguisherIcon,
-    Luminosity: alarmIcon,
-    Proximity: extinguisherIcon,
-  }
+const icons: Record<string, string> = {
+  Flexibility: extinguisherIcon,
+  Luminosity: alarmIcon,
+  Proximity: extinguisherIcon,
+}
 
-  return new Icon({
+const generateIcon = (name: string): Icon =>
+  new Icon({
     iconUrl: icons[name],
     iconSize: [25, 25],
   })
-}
+
 const alerts = [
   {
     name: 'Extincteur déplomber',
@@ -93,13 +90,15 @@ const histories = [
   },
 ]
 
-interface nodesType {
+interface nodeType {
   coordinates: {
     x: number
     y: number
   }
   _measurement: string
   topic: string
+  name: string
+  _time: string
 }
 
 const MapPage: FC = () => {
@@ -111,7 +110,7 @@ const MapPage: FC = () => {
   const [alertTimeline, setAlertTimeline] = useState<gsap.core.Timeline>()
   const [historyTimeline, setHistoryTimeline] = useState<gsap.core.Timeline>()
   const [isLoading, setIsLoading] = useState(false)
-  const [nodes, setNodes] = useState<nodesType[]>([])
+  const [nodes, setNodes] = useState<nodeType[]>([])
   const history = useHistory()
   const filterButton = useRef<HTMLDivElement>(null)
 
@@ -176,6 +175,16 @@ const MapPage: FC = () => {
     }
   }
 
+  const goToPage = (node: Partial<nodeType>) => {
+    const { _measurement, topic } = node
+
+    if (_measurement && ['Flexibility', 'Proximity'].includes(_measurement)) {
+      history.push(`extinguisher`, node)
+      return
+    }
+    history.push(`detector`, node)
+  }
+
   return (
     <>
       {!isLoading && (
@@ -185,12 +194,15 @@ const MapPage: FC = () => {
         >
           <MapContainer {...mapConfig}>
             <ImageOverlay url={map} bounds={bounds} />
-            {nodes.map(({ coordinates, topic, _measurement }) => (
-              <Marker key={topic} position={[coordinates.y, coordinates.x]} icon={generateIcon(_measurement)}>
-                <Popup>
-                  A pretty CSS3 popup. <br /> Easily customizable.
-                </Popup>
-              </Marker>
+            {nodes.map(({ coordinates, topic, _measurement, name, _time }) => (
+              <Marker
+                key={topic}
+                position={[coordinates.y, coordinates.x]}
+                icon={generateIcon(_measurement)}
+                eventHandlers={{
+                  click: () => goToPage({ name, _time, _measurement, topic }),
+                }}
+              />
             ))}
           </MapContainer>
           <div className='absolute top-4 right-4 flex flex-col space-y-4' style={{ zIndex: 9999999999 }}>

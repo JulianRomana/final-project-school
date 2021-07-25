@@ -1,11 +1,11 @@
 import React, { FC } from 'react'
 import { Link } from 'react-router-dom'
-import Illustration1 from '../assets/images/illustration-1.svg'
-import Illustration2 from '../assets/images/illustration-2.svg'
-import Illustration3 from '../assets/images/illustration-3.svg'
-import Button from '../components/Button/Button'
-import Input from '../components/Input/Input'
-import { Routes } from '../enums/router'
+import Illustration1 from '/@/assets/images/illustration-1.svg'
+import Illustration2 from '/@/assets/images/illustration-2.svg'
+import Illustration3 from '/@/assets/images/illustration-3.svg'
+import { Button } from '/@/components/Button'
+import { Input } from '/@/components/Input'
+import { Routes } from '/@/enums/router'
 
 const LoginPage: FC = () => {
   return (
