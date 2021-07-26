@@ -1,11 +1,15 @@
 import { CRS, Icon, LatLngBoundsExpression } from 'leaflet'
 import 'leaflet/dist/leaflet.css'
-import React, { FC, useEffect, useRef, useState } from 'react'
+import React, { FC, useEffect, useMemo, useRef, useState } from 'react'
 import { ImageOverlay, MapContainer, MapContainerProps, Marker } from 'react-leaflet'
 import { useHistory } from 'react-router-dom'
 import { MapAlertMenu, MapFilterMenu, MapHistoryMenu } from './components'
-import alarmIcon from '/@/assets/alarmIcon.svg'
-import extinguisherIcon from '/@/assets/extinguisherIcon.svg'
+import AlarmIcon from '/@/assets/alarmIcon.svg'
+import DetectorOffline from '/@/assets/detector-offline.svg'
+import DetectorOnline from '/@/assets/detector-online.svg'
+import ExtinguisherOffline from '/@/assets/extinguisher-offline.svg'
+import ExtinguisherOnline from '/@/assets/extinguisher-online.svg'
+import ExtinguisherIcon from '/@/assets/extinguisherIcon.svg'
 import AlertIcon from '/@/assets/images/alert.svg'
 import ClockIcon from '/@/assets/images/clock.svg'
 import map from '/@/assets/map.png'
@@ -20,7 +24,7 @@ const bounds: LatLngBoundsExpression = [
 
 const mapConfig: MapContainerProps = {
   className: 'h-full',
-  center: [700, 500],
+  center: [250, 250],
   zoom: 1,
   crs: CRS.Simple,
   maxZoom: 3,
@@ -29,8 +33,12 @@ const mapConfig: MapContainerProps = {
 }
 
 const icons: Record<string, string> = {
-  Flexibility: extinguisherIcon,
-  Luminosity: alarmIcon,
+  Flexibility: ExtinguisherIcon,
+  Luminosity: AlarmIcon,
+  FlexibilityOnline: ExtinguisherOnline,
+  FlexibilityOffline: ExtinguisherOffline,
+  LuminosityOnline: DetectorOnline,
+  LuminosityOffline: DetectorOffline,
 }
 
 const generateIcon = (name: string): Icon =>
@@ -40,54 +48,16 @@ const generateIcon = (name: string): Icon =>
   })
 
 const alerts = [
-  {
-    name: 'Extincteur déplomber',
-    location: 'Centre sportif',
-    date: 'Thu Jul 22 2021 10:12:56',
-  },
-  {
-    name: 'Extincteur déplomber',
-    location: 'Centre sportif',
-    date: 'Thu Jul 22 2021 10:12:56',
-  },
-  {
-    name: 'Extincteur déplomber',
-    location: 'Centre sportif',
-    date: 'Thu Jul 22 2021 10:12:56',
-  },
+  { name: 'Extincteur déplomber', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
+  { name: 'Extincteur déplomber', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
+  { name: 'Extincteur déplomber', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
 ]
 
-const histories = [
-  {
-    id: 22,
-    name: 'Extincteur déplomber',
-    date: 'Thu Jul 22 2021 10:12:56',
-    isExtinguisher: true,
-  },
-  {
-    id: 22,
-    name: 'Extincteur déplomber',
-    date: 'Thu Jul 22 2021 10:12:56',
-    isExtinguisher: true,
-  },
-  {
-    id: 22,
-    name: 'Extincteur déplomber',
-    date: 'Thu Jul 22 2021 10:12:56',
-    isExtinguisher: true,
-  },
-  {
-    id: 22,
-    name: 'Extincteur déplomber',
-    date: 'Thu Jul 22 2021 10:12:56',
-    isExtinguisher: true,
-  },
-  {
-    id: 22,
-    name: 'Le détecteur a était enclanché',
-    date: 'Thu Jul 22 2021 10:12:56',
-    isExtinguisher: false,
-  },
+const filterList = [
+  { name: 'offline', label: 'Hors service', color: 'bg-cloud' },
+  { name: 'online', label: 'En service', color: 'bg-evergreen' },
+  { name: 'extinguisher', label: 'Extincteur', icon: ExtinguisherIcon },
+  { name: 'detector', label: 'Detecteur', icon: AlarmIcon },
 ]
 
 const MapPage: FC = () => {
@@ -100,8 +70,8 @@ const MapPage: FC = () => {
   const [historyTimeline, setHistoryTimeline] = useState<gsap.core.Timeline>()
   const [isLoading, setIsLoading] = useState(false)
   const [nodes, setNodes] = useState<NodeType[]>([])
-  const history = useHistory()
   const filterButton = useRef<HTMLDivElement>(null)
+  const history = useHistory()
 
   useEffect(() => {
     ;(async () => {
@@ -110,12 +80,35 @@ const MapPage: FC = () => {
         const { data } = await axios.get('/influx')
         setNodes(data.data)
       } catch (err) {
-        history.push('map')
+        history.push('/map')
       } finally {
         setIsLoading(false)
       }
     })()
   }, [history])
+
+  const makers = useMemo(() => {
+    let filtered: NodeType[] = []
+
+    if (filters.length > 0) {
+      if (filters.includes('offline')) {
+        filtered = [...filtered, ...nodes.filter((node) => node.isActive === false)]
+      }
+      if (filters.includes('online')) {
+        filtered = [...filtered, ...nodes.filter((node) => node.isActive == true)]
+      }
+      if (filters.includes('extinguisher')) {
+        filtered = [...filtered, ...nodes.filter((node) => node._measurement === 'Flexibility')]
+      }
+      if (filters.includes('detector')) {
+        filtered = [...filtered, ...nodes.filter((node) => node._measurement === 'Luminosity')]
+      }
+
+      return filtered
+    } else {
+      return nodes
+    }
+  }, [filters, nodes])
 
   const handleFilterMenu = (): void => {
     closeAlertMenu()
@@ -125,7 +118,7 @@ const MapPage: FC = () => {
     else setShowFilterMenu(!showFilterMenu)
   }
 
-  const handleAlertMenu = () => {
+  const handleAlertMenu = (): void => {
     closeFilterMenu()
     closeHistoryMenu()
 
@@ -133,7 +126,7 @@ const MapPage: FC = () => {
     else setShowAlertMenu(!showAlertMenu)
   }
 
-  const handleHistoryMenu = () => {
+  const handleHistoryMenu = (): void => {
     closeAlertMenu()
     closeFilterMenu()
 
@@ -141,17 +134,17 @@ const MapPage: FC = () => {
     else setShowHistoryMenu(!showHistoryMenu)
   }
 
-  const closeFilterMenu = () => {
+  const closeFilterMenu = (): void => {
     if (filterTimeline) filterTimeline.timeScale(4).reverse()
     setShowFilterMenu(false)
   }
 
-  const closeAlertMenu = () => {
+  const closeAlertMenu = (): void => {
     if (alertTimeline) alertTimeline.timeScale(4).reverse()
     setShowAlertMenu(false)
   }
 
-  const closeHistoryMenu = () => {
+  const closeHistoryMenu = (): void => {
     if (historyTimeline) historyTimeline.timeScale(4).reverse()
     setShowHistoryMenu(false)
   }
@@ -184,11 +177,11 @@ const MapPage: FC = () => {
         >
           <MapContainer {...mapConfig}>
             <ImageOverlay url={map} bounds={bounds} />
-            {nodes.map((node) => (
+            {makers.map((node) => (
               <Marker
                 key={node.topic}
                 position={[node.coordinates.y, node.coordinates.x]}
-                icon={generateIcon(node._measurement)}
+                icon={generateIcon(`${node._measurement}${node.isActive ? 'Online' : 'Offline'}`)}
                 eventHandlers={{
                   click: () => goToPage(node),
                 }}
@@ -209,6 +202,7 @@ const MapPage: FC = () => {
           <MapFilterMenu
             active={showFilterMenu}
             filters={filters}
+            filterList={filterList}
             handFilter={handFilter}
             setFilterTimeline={setFilterTimeline}
             closeFilterMenu={closeFilterMenu}
@@ -221,7 +215,7 @@ const MapPage: FC = () => {
           />
           <MapHistoryMenu
             active={showHistoryMenu}
-            histories={histories}
+            histories={nodes}
             setHistoryTimeline={setHistoryTimeline}
             closeHistoryMenu={closeHistoryMenu}
           />

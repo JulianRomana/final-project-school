@@ -17,7 +17,7 @@ const ButtonFilter: FC<ButtonFilterProps> = ({ children, color, icon, active = f
       }`}
     >
       <div
-        className={`h-5 w-5 ${color || 'bg-onyx'} rounded-full mr-2 p-1 border-[1px] transition-colors duration-200 ${
+        className={`h-5 w-5 ${color || 'bg-onyx'} rounded-full mr-2 border-[1px] transition-colors duration-200 ${
           active ? 'border-cloud' : 'border-transparent'
         }`}
       >

@@ -17,6 +17,7 @@ export interface NodeType {
     x: number
     y: number
   }
+  isActive: boolean
   _measurement: string
   topic: string
   name: string

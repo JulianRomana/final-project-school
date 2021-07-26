@@ -2,17 +2,7 @@ import { gsap } from 'gsap'
 import 'leaflet/dist/leaflet.css'
 import React, { FC, useEffect, useRef } from 'react'
 import CloseWhiteIcon from '/@/assets/images/close-white.svg'
-import DetectorIcon from '/@/assets/images/detector.svg'
-import ExtinguisherIcon from '/@/assets/images/extinguisher.svg'
 import ButtonFilter from '/@/components/Button/ButtonFilter'
-
-const filterList = [
-  { name: 'offline', label: 'Hors-service', color: 'bg-cloud' },
-  { name: 'in-alert', label: 'En alert', color: 'bg-yellow' },
-  { name: 'in service', label: 'En service', color: 'bg-evergreen' },
-  { name: 'extinguisher', label: 'Extincteur', icon: ExtinguisherIcon },
-  { name: 'detector', label: 'Detecteur', icon: DetectorIcon },
-]
 
 interface MapFilterMenuProps {
   readonly active: boolean
@@ -20,9 +10,23 @@ interface MapFilterMenuProps {
   readonly handFilter: (value: string) => void
   readonly setFilterTimeline: React.Dispatch<React.SetStateAction<gsap.core.Timeline | undefined>>
   readonly closeFilterMenu: () => void
+  readonly filterList: {
+    readonly name: string
+    readonly isActive?: boolean
+    readonly label: string
+    readonly icon?: string
+    readonly color?: string
+  }[]
 }
 
-const MapFilterMenu: FC<MapFilterMenuProps> = ({ active, filters, handFilter, closeFilterMenu, setFilterTimeline }) => {
+const MapFilterMenu: FC<MapFilterMenuProps> = ({
+  active,
+  filters,
+  filterList,
+  handFilter,
+  closeFilterMenu,
+  setFilterTimeline,
+}) => {
   const wrapper = useRef<HTMLDivElement>(null)
   const background = useRef<HTMLDivElement>(null)
   const title = useRef<HTMLHeadingElement>(null)

@@ -53,14 +53,13 @@ const MapHistoryMenu: FC<MapHistoryMenuProps> = ({ active, histories, setHistory
           </div>
         </div>
         <div className='relative w-full p-4 overflow-scroll' style={{ height: 'calc(100% - 3.5rem)' }}>
-          <div className='space-y-4 '>
+          <div className='space-y-4'>
             {histories.map((history, index) => (
               <div key={`Alert_${index}`} className='alert__item transform translate-y-8 opacity-0'>
                 <HistoryCard
-                  isExtinguisher={history.isExtinguisher}
-                  id={history.id}
-                  name={history.name}
-                  date={history.date}
+                  isExtinguisher={history._measurement === 'Flexibility' ? true : false}
+                  id={history.sensorId + history.nodeId}
+                  date={history._time}
                 />
               </div>
             ))}
