@@ -41,10 +41,12 @@ const icons: Record<string, string> = {
   LuminosityOffline: DetectorOffline,
 }
 
+const ICON_SIZE = 25
+
 const generateIcon = (name: string): Icon =>
   new Icon({
     iconUrl: icons[name],
-    iconSize: [25, 25],
+    iconSize: [ICON_SIZE, ICON_SIZE],
   })
 
 const alerts = [
@@ -180,7 +182,7 @@ const MapPage: FC = () => {
             {makers.map((node) => (
               <Marker
                 key={node.topic}
-                position={[node.coordinates.y, node.coordinates.x]}
+                position={[node.coordinates.y + ICON_SIZE / 3, node.coordinates.x - ICON_SIZE / 4]}
                 icon={generateIcon(`${node._measurement}${node.isActive ? 'Online' : 'Offline'}`)}
                 eventHandlers={{
                   click: () => goToPage(node),
