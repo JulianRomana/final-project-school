@@ -4,15 +4,6 @@ import React, { FC } from 'react'
 import fireIcon from '/@/assets/fire.svg'
 import warningIcon from '/@/assets/warning.svg'
 
-/* 
-  "_time": "2021-07-23T14:24:17.388788Z",
-"_value": 9280.55,
-"_measurement": "Luminosity",
-"name": "BU",
-"nodeId": 8364979,
-"topic": "WEB3-GROUPE7/8364979/121",
-"sensorId": 121,
-"isActive": false */
 interface ProductActivityProps {
   readonly activity: {
     _time: string

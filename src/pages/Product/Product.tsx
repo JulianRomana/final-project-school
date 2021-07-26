@@ -3,32 +3,39 @@ import { useHistory, useLocation } from 'react-router-dom'
 import ProductActivity from './components/ProductActivity'
 import ProductDetails from './components/ProductDetails'
 import axios from '/@/config/axios'
-import { ProductInfos } from '/@/types'
+import { NodeType, ProductInfos } from '/@/types'
 
 const Product: FC = () => {
   const [isLoading, setIsLoading] = useState(false)
   const [activity, setActivity] = useState([])
   const [productInfos, setProductInfos] = useState<ProductInfos>()
 
-  const { state } = useLocation<Record<string, string>>()
+  const { state } = useLocation<NodeType>()
   const history = useHistory()
 
   const isDetector = location.pathname.includes('detector')
+  const productUrl = `/details/${isDetector ? 'detector' : 'extinguisher'}/${state.nodeId}/${state.sensorId}`
+  const activityUrl = `/influx/filter?area=${state.name}&sensor=${state._measurement}&sortBy=_time`
 
   useEffect(() => {
     ;(async () => {
       try {
         setIsLoading(true)
-        const { data } = await axios.get(`/influx/filter?area=${state.name}&sensor=${state._measurement}&sortBy=_time`)
-        setActivity(data.data)
-        setProductInfos(data.data[0])
+
+        const [{ data: productData }, { data: activityData }] = await Promise.all([
+          axios.get(productUrl),
+          axios.get(activityUrl),
+        ])
+
+        setActivity(activityData.data)
+        setProductInfos(productData.data[0])
       } catch (err) {
         history.push('map')
       } finally {
         setIsLoading(false)
       }
     })()
-  }, [history, state])
+  }, [history, activityUrl, productUrl])
 
   return (
     <section className='container'>

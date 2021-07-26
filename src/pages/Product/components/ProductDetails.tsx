@@ -1,4 +1,5 @@
 import { format } from 'date-fns'
+import { fr } from 'date-fns/locale'
 import React, { FC } from 'react'
 import detectorIllu from '/@/assets/detector.svg'
 import extinguisherIllu from '/@/assets/extinguisher.svg'
@@ -11,9 +12,8 @@ interface ProductDetailsProps {
 
 const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
   const illu = isDetector ? detectorIllu : extinguisherIllu
-  const lastModifiedDate = format(new Date(product._time), 'd/MM/yyyy')
-  const details = ['type: CO2', 'class AB']
-  const usage = 'Pour tous types de feu'
+  const lastModifiedDate = format(new Date(product.lastModified), 'dd/MM/yyyy', { locale: fr })
+  const details = [`Type: ${product.details.type}`, `Classe: ${product.details.class}`]
 
   return (
     <div className='flex justify-between pt-4'>
@@ -21,10 +21,10 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
         <div className={`text-sm font-font-bold ${isDetector ? 'text-blue' : 'text-orange'}`}>
           {isDetector ? 'DETECTEUR' : 'EXTINCTEUR'}
         </div>
-        <div className='text-sm'>{product.name}</div>
-        <div className='text-stale-light my-4 font-bold'>N°{product.sensorId}</div>
+        <div className='text-sm'>{product.room}</div>
+        <div className='text-stale-light my-4 font-bold'>N°{product.id}</div>
         <img className='justify-center self-center mb-4' src={illu} alt='illustration' />
-        <div
+        {/* <div
           className={`mt-auto relative mb-3 text-sm ${
             product.isActive
               ? 'text-evergreen before:(absolute top-1 right-0 w-3 h-3 rounded-1 content bg-evergreen)'
@@ -32,7 +32,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
           }`}
         >
           {product.isActive ? 'En service' : 'Hors service'}
-        </div>
+        </div> */}
       </div>
       <div className={`rounded-lg flex flex-col p-3 ${isDetector ? 'bg-blue-25' : 'bg-orange-25'}`}>
         <h3 className={`mb-2 text-sm font-bold ${isDetector ? 'text-blue' : 'text-orange'}`}>STATUS</h3>
@@ -47,7 +47,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
           ))}
         </div>
         <p className={`${isDetector ? 'text-blue' : 'text-orange'} mt-auto text-sm`}>Usage: </p>
-        <span className='text-sm text-onyx'>{usage}</span>
+        <span className='text-sm text-onyx'>{product.details.usage}</span>
       </div>
     </div>
   )

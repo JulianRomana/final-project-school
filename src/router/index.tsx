@@ -8,16 +8,16 @@ const routes = [
   { to: Routes.LOGIN, component: <Login /> },
   { to: Routes.DASHBOARD, component: <Dashboard /> },
   { to: Routes.MAP, component: <Map /> },
-  { to: Routes.EXTINGUISHER, component: <Product /> },
-  { to: Routes.DETECTOR, component: <Product /> },
+  { to: Routes.EXTINGUISHER, component: <Product />, isExact: false },
+  { to: Routes.DETECTOR, component: <Product />, isExact: false },
 ]
 
 const Router: FC = () => {
   return (
     <Switch>
-      {routes.map((route, index) => (
-        <Route key={`Route_${index}`} path={route.to} exact>
-          {route.component}
+      {routes.map(({ component, to, isExact }, index) => (
+        <Route key={`Route_${index}`} path={to} exact={isExact || true}>
+          {component}
         </Route>
       ))}
     </Switch>

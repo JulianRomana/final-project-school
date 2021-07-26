@@ -11,6 +11,7 @@ import ClockIcon from '/@/assets/images/clock.svg'
 import map from '/@/assets/map.png'
 import { Button, ButtonIcon } from '/@/components/Button'
 import axios from '/@/config/axios'
+import { NodeType } from '/@/types'
 
 const bounds: LatLngBoundsExpression = [
   [0, 0],
@@ -90,17 +91,6 @@ const histories = [
   },
 ]
 
-interface nodeType {
-  coordinates: {
-    x: number
-    y: number
-  }
-  _measurement: string
-  topic: string
-  name: string
-  _time: string
-}
-
 const MapPage: FC = () => {
   const [filters, setFilters] = useState<string[]>([])
   const [showFilterMenu, setShowFilterMenu] = useState(false)
@@ -110,7 +100,7 @@ const MapPage: FC = () => {
   const [alertTimeline, setAlertTimeline] = useState<gsap.core.Timeline>()
   const [historyTimeline, setHistoryTimeline] = useState<gsap.core.Timeline>()
   const [isLoading, setIsLoading] = useState(false)
-  const [nodes, setNodes] = useState<nodeType[]>([])
+  const [nodes, setNodes] = useState<NodeType[]>([])
   const history = useHistory()
   const filterButton = useRef<HTMLDivElement>(null)
 
@@ -175,14 +165,15 @@ const MapPage: FC = () => {
     }
   }
 
-  const goToPage = (node: Partial<nodeType>) => {
-    const { _measurement, topic } = node
+  const goToPage = (node: NodeType) => {
+    const { _measurement, nodeId, sensorId } = node
 
-    if (_measurement && ['Flexibility', 'Proximity'].includes(_measurement)) {
-      history.push(`extinguisher`, node)
+    if (['Flexibility', 'Proximity'].includes(_measurement)) {
+      history.push(`/extinguisher/${nodeId}/${sensorId}`, node)
       return
     }
-    history.push(`detector`, node)
+
+    history.push(`/detector/${nodeId}/${sensorId}`, node)
   }
 
   return (
@@ -194,13 +185,13 @@ const MapPage: FC = () => {
         >
           <MapContainer {...mapConfig}>
             <ImageOverlay url={map} bounds={bounds} />
-            {nodes.map(({ coordinates, topic, _measurement, name, _time }) => (
+            {nodes.map((node) => (
               <Marker
-                key={topic}
-                position={[coordinates.y, coordinates.x]}
-                icon={generateIcon(_measurement)}
+                key={node.topic}
+                position={[node.coordinates.y, node.coordinates.x]}
+                icon={generateIcon(node._measurement)}
                 eventHandlers={{
-                  click: () => goToPage({ name, _time, _measurement, topic }),
+                  click: () => goToPage(node),
                 }}
               />
             ))}
