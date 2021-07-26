@@ -31,7 +31,6 @@ const mapConfig: MapContainerProps = {
 const icons: Record<string, string> = {
   Flexibility: extinguisherIcon,
   Luminosity: alarmIcon,
-  Proximity: extinguisherIcon,
 }
 
 const generateIcon = (name: string): Icon =>
