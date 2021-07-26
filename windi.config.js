@@ -16,10 +16,10 @@ export default defineConfig({
       },
       cyan: '#f2fbff',
       orange: {
-        DEFAULT: '#ff4800',
-        75: '#ff4800bf',
-        50: '#ff480080',
-        25: '#ff480040',
+        DEFAULT: '#ff0000',
+        75: '#ff0000bf',
+        50: '#ff000080',
+        25: '#ff000040',
       },
       yellow: {
         DEFAULT: '#ffb600',

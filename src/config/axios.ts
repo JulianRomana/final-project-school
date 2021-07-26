@@ -1,7 +1,7 @@
 import axios from 'axios'
 
 export default axios.create({
-  baseURL: 'https://web3-groupe-7-fireforce.herokuapp.com/api',
+  baseURL: import.meta.env.VITE_API_URL,
   headers: {
     'Access-Control-Allow-Origin': '*',
   },
