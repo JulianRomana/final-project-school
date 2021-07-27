@@ -20,10 +20,10 @@ const MapAlertMenu: FC<MapAlertMenuProps> = ({ active, alerts, setAlertTimeline,
   const handleAnimation = (): void => {
     const tl = gsap.timeline({ defaults: { delay: 0, ease: 'Power3.inOut' } })
     tl.to(wrapper.current, { duration: 0, translateX: 0 })
-    tl.to(background.current, { duration: 0.5, scaleX: 1, transformOrigin: 'right' })
-    tl.to(title.current, { duration: 0.5, opacity: 1 })
-    tl.to('.alert__item', { duration: 0.5, delay: -0.3, translateY: 0, opacity: 1, stagger: { amount: 0.4 } })
-    tl.to(closeButton.current, { duration: 0.4, opacity: 1 })
+    tl.to(background.current, { duration: 0.4, scaleX: 1, transformOrigin: 'right' })
+    tl.to(title.current, { duration: 0.4, opacity: 1 })
+    tl.to(closeButton.current, { duration: 0.4, delay: -0.4, opacity: 1 })
+    tl.to('.alert__item', { duration: 0.4, delay: -0.3, translateY: 0, opacity: 1, stagger: { amount: 0.2 } })
     setAlertTimeline(tl)
   }
 

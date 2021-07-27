@@ -19,10 +19,10 @@ const MapHistoryMenu: FC<MapHistoryMenuProps> = ({ active, histories, setHistory
   const handleAnimation = (): void => {
     const tl = gsap.timeline({ defaults: { delay: 0, ease: 'Power3.inOut' } })
     tl.to(wrapper.current, { duration: 0, translateY: 0 })
-    tl.to(background.current, { duration: 0.5, scaleY: 1, transformOrigin: 'bottom' })
-    tl.to(title.current, { duration: 0.5, opacity: 1 })
-    tl.to('.alert__item', { duration: 0.5, delay: -0.3, translateY: 0, opacity: 1, stagger: { amount: 0.4 } })
-    tl.to(closeButton.current, { duration: 0.5, opacity: 1 })
+    tl.to(background.current, { duration: 0.4, scaleY: 1, transformOrigin: 'bottom' })
+    tl.to(title.current, { duration: 0.4, opacity: 1 })
+    tl.to(closeButton.current, { duration: 0.4, delay: -0.4, opacity: 1 })
+    tl.to('.history__item', { duration: 0.4, delay: -0.3, translateY: 0, opacity: 1, stagger: { amount: 1.2 } })
     setHistoryTimeline(tl)
   }
 
@@ -55,7 +55,7 @@ const MapHistoryMenu: FC<MapHistoryMenuProps> = ({ active, histories, setHistory
         <div className='relative w-full p-4 overflow-scroll' style={{ height: 'calc(100% - 3.5rem)' }}>
           <div className='space-y-4'>
             {histories.map((history, index) => (
-              <div key={`Alert_${index}`} className='alert__item transform translate-y-8 opacity-0'>
+              <div key={`History_${index}`} className='history__item transform translate-y-8 opacity-0'>
                 <HistoryCard
                   isExtinguisher={history._measurement === 'Flexibility' ? true : false}
                   id={history.sensorId + history.nodeId}
@@ -66,7 +66,7 @@ const MapHistoryMenu: FC<MapHistoryMenuProps> = ({ active, histories, setHistory
           </div>
         </div>
       </div>
-      <div ref={background} className='bg-cyan absolute inset-0 z-10 transform scale-y-0'></div>
+      <div ref={background} className='bg-cyan absolute inset-0 z-10 transform scale-y-0' />
     </div>
   )
 }

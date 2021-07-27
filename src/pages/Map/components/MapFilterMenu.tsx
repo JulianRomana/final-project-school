@@ -35,10 +35,10 @@ const MapFilterMenu: FC<MapFilterMenuProps> = ({
   const handleAnimation = (): void => {
     const tl = gsap.timeline({ defaults: { delay: 0, ease: 'Power3.inOut' } })
     tl.to(wrapper.current, { duration: 0, translateY: 0 })
-    tl.to(background.current, { duration: 0.5, scaleY: 1, transformOrigin: 'bottom' })
-    tl.to(title.current, { duration: 0.6, opacity: 1 })
-    tl.to('.button__item', { duration: 0.4, delay: -0.3, opacity: 1, translateY: 0, stagger: { amount: 0.4 } })
-    tl.to(closeButton.current, { duration: 0.4, opacity: 1 })
+    tl.to(background.current, { duration: 0.4, scaleY: 1, transformOrigin: 'bottom' })
+    tl.to(title.current, { duration: 0.4, opacity: 1 })
+    tl.to(closeButton.current, { duration: 0.4, delay: -0.4, opacity: 1 })
+    tl.to('.button__item', { duration: 0.4, delay: -0.3, opacity: 1, translateY: 0, stagger: { amount: 0.2 } })
     setFilterTimeline(tl)
   }
 
