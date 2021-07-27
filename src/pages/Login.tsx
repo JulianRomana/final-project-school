@@ -1,5 +1,5 @@
 import React, { FC } from 'react'
-import { Link } from 'react-router-dom'
+import { Link, useHistory } from 'react-router-dom'
 import Illustration1 from '/@/assets/images/illustration-1.svg'
 import Illustration2 from '/@/assets/images/illustration-2.svg'
 import Illustration3 from '/@/assets/images/illustration-3.svg'
@@ -8,6 +8,8 @@ import { Input } from '/@/components/Input'
 import { Routes } from '/@/enums/router'
 
 const LoginPage: FC = () => {
+  const { push } = useHistory()
+
   return (
     <div className='container'>
       <div className='relative pt-24 pb-44'>
@@ -15,7 +17,9 @@ const LoginPage: FC = () => {
           <h1 className='text-blue text-2xl font-bold tracking-[-2%]'>Bienvenue sur Fleux</h1>
           <Input id='email' type='email' label='Identifiant' />
           <Input id='password' type='password' label='Mot de passe' />
-          <Button block>Se connecter</Button>
+          <Button block onClick={() => push('map')}>
+            Se connecter
+          </Button>
 
           <div className='mt-4 text-center'>
             <Link to={Routes.MAP} className='font-bold text-blue uppercase'>
