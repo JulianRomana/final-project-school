@@ -24,7 +24,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
         <div className='text-sm'>{product.room}</div>
         <div className='text-stale-light my-4 font-bold'>N°{product.id}</div>
         <img className='justify-center self-center mb-4' src={illu} alt='illustration' />
-        {/* <div
+        <div
           className={`mt-auto relative mb-3 text-sm ${
             product.isActive
               ? 'text-evergreen before:(absolute top-1 right-0 w-3 h-3 rounded-1 content bg-evergreen)'
@@ -32,7 +32,7 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
           }`}
         >
           {product.isActive ? 'En service' : 'Hors service'}
-        </div> */}
+        </div>
       </div>
       <div className={`rounded-lg flex flex-col p-3 ${isDetector ? 'bg-blue-25' : 'bg-orange-25'}`}>
         <h3 className={`mb-2 text-sm font-bold ${isDetector ? 'text-blue' : 'text-orange'}`}>STATUS</h3>

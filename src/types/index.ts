@@ -4,6 +4,7 @@ export interface ProductInfos {
   lastModified: string
   id: number
   room: string
+  isActive: boolean
   details: {
     type: string
     class: string
