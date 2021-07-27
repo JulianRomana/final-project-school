@@ -160,14 +160,14 @@ const MapPage: FC = () => {
   }
 
   const goToPage = (node: NodeType) => {
-    const { _measurement, nodeId, sensorId } = node
+    const { _measurement, nodeId } = node
 
     if (['Flexibility', 'Proximity'].includes(_measurement)) {
-      history.push(`/extinguisher/${nodeId}/${sensorId}`, node)
+      history.push(`/extinguisher/${nodeId}`, node)
       return
     }
 
-    history.push(`/detector/${nodeId}/${sensorId}`, node)
+    history.push(`/detector/${nodeId}`, node)
   }
 
   return (

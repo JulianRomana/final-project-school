@@ -14,7 +14,7 @@ const Product: FC = () => {
   const history = useHistory()
 
   const isDetector = location.pathname.includes('detector')
-  const productUrl = `/details/${isDetector ? 'detector' : 'extinguisher'}/${state.nodeId}/${state.sensorId}`
+  const productUrl = `/details/${isDetector ? 'detector' : 'extinguisher'}/${state.nodeId}`
   const activityUrl = `/influx/filter?area=${state.name}&sensor=${state._measurement}&sortBy=_time`
 
   useEffect(() => {
@@ -28,7 +28,7 @@ const Product: FC = () => {
         ])
 
         setActivity(activityData.data)
-        setProductInfos(productData.data[0])
+        setProductInfos(productData.data)
       } catch (err) {
         history.push('map')
       } finally {

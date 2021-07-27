@@ -3,6 +3,6 @@ export enum Routes {
   LOGIN = '/login',
   DASHBOARD = '/dashboard',
   MAP = '/map',
-  EXTINGUISHER = '/extinguisher/:nodeId?/:sensorId?',
-  DETECTOR = '/detector/:nodeId?/:sensorId?',
+  EXTINGUISHER = '/extinguisher/:nodeId?',
+  DETECTOR = '/detector/:nodeId?',
 }
