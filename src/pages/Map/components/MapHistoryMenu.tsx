@@ -41,7 +41,7 @@ const MapHistoryMenu: FC<MapHistoryMenuProps> = ({ active, histories, setHistory
       <div className='relative z-20 h-full'>
         <div className='flex justify-between items-center p-4'>
           <h1 ref={title} className='text-blue uppercase font-bold tracking-[-2%] opacity-0'>
-            Historique d’événement
+            Historique d’événements
           </h1>
           <div ref={closeButton} className='opacity-0'>
             <img

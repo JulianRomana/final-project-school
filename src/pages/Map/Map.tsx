@@ -50,9 +50,9 @@ const generateIcon = (name: string): Icon =>
   })
 
 const alerts = [
-  { name: 'Extincteur déplomber', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
-  { name: 'Extincteur déplomber', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
-  { name: 'Extincteur déplomber', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
+  { name: 'Extincteur déplombé', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
+  { name: 'Extincteur déplombé', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
+  { name: 'Extincteur déplombé', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
 ]
 
 const filterList = [

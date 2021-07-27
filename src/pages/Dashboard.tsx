@@ -9,17 +9,17 @@ import { ToastAlert } from '/@/components/Toast'
 const DashboardPage: FC = () => {
   const [toastAlerts, setToastAlerts] = useState([
     {
-      name: 'Extincteur déplomber',
+      name: 'Extincteur déplombé',
       location: 'Centre sportif',
       date: 'Thu Jul 22 2021 10:12:56',
     },
     {
-      name: 'Extincteur déplomber',
+      name: 'Extincteur déplombé',
       location: 'Centre sportif',
       date: 'Thu Jul 22 2021 10:12:56',
     },
     {
-      name: 'Extincteur déplomber',
+      name: 'Extincteur déplombé',
       location: 'Centre sportif',
       date: 'Thu Jul 22 2021 10:12:56',
     },

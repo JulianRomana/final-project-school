@@ -20,7 +20,9 @@ const HistoryCard: FC<HistoryCardProps> = ({ isExtinguisher, id, date }) => {
         <h3 className='font-bold uppercase'>
           {isExtinguisher ? 'Extincteur' : 'Détecteur de fumée'} n°{id}
         </h3>
-        <p className='leading-[14px]'>{isExtinguisher ? "L'extincteur a été déplacé" : "L'alarme a été déclenchée"}</p>
+        <p className='leading-[14px]'>
+          {isExtinguisher ? "L'extincteur a été déplacé" : 'Le détecteur a été enclenché'}
+        </p>
         <p className='text-onyx mt-2 text-stale-light'>{format(new Date(date), 'd MMM yyyy HH:mm', { locale: fr })}</p>
       </div>
     </div>
