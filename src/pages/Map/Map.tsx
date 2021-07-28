@@ -14,6 +14,7 @@ import AlertIcon from '/@/assets/images/alert.svg'
 import ClockIcon from '/@/assets/images/clock.svg'
 import map from '/@/assets/map.png'
 import { Button, ButtonIcon } from '/@/components/Button'
+import { Loader } from '/@/components/Loader'
 import axios from '/@/config/axios'
 import { NodeType } from '/@/types'
 
@@ -168,7 +169,9 @@ const MapPage: FC = () => {
 
   return (
     <>
-      {!isLoading && (
+      {isLoading ? (
+        <Loader loader={{ type: 'Oval', width: 100, height: 100, color: '#0071B6' }} centered />
+      ) : (
         <div
           className='w-full h-[calc(100vh - 56px)] relative overflow-hidden'
           style={{ height: 'calc(100vh - 56px)' }}

@@ -2,6 +2,7 @@ import React, { FC, useEffect, useState } from 'react'
 import { useHistory, useLocation } from 'react-router-dom'
 import ProductActivity from './components/ProductActivity'
 import ProductDetails from './components/ProductDetails'
+import { Loader } from '/@/components/Loader'
 import axios from '/@/config/axios'
 import { NodeType, ProductInfos } from '/@/types'
 
@@ -40,7 +41,7 @@ const Product: FC = () => {
   return (
     <section className='container'>
       {isLoading ? (
-        <div>Chargement</div>
+        <Loader loader={{ type: 'Oval', width: 100, height: 100, color: '#0071B6' }} centered />
       ) : (
         <>
           {productInfos && <ProductDetails product={productInfos} isDetector={isDetector} />}
