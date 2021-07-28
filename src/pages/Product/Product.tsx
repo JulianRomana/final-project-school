@@ -40,7 +40,7 @@ const Product: FC = () => {
   return (
     <section className='container'>
       {isLoading ? (
-        <div> isLoading </div>
+        <div>Chargement</div>
       ) : (
         <>
           {productInfos && <ProductDetails product={productInfos} isDetector={isDetector} />}

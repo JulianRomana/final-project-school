@@ -30,7 +30,7 @@ const ProductActivity: FC<ProductActivityProps> = ({ activity, isDetector }) => 
               <span className='font-medium'>
                 {isDetector ? 'Le détecteur a été enclenché' : "L'extincteur a été déplacé"}
               </span>
-              <div> {format(new Date(_time), 'd MMM yyyy hh:mm', { locale: fr })} </div>
+              <p className='text-stale-light'>{format(new Date(_time), 'd MMM yyyy hh:mm', { locale: fr })}</p>
             </div>
           </div>
         ))}

@@ -19,9 +19,9 @@ const ProductDetails: FC<ProductDetailsProps> = ({ product, isDetector }) => {
     <div className='flex justify-between pt-4'>
       <div className='flex flex-col pt-3 px-2'>
         <div className={`text-sm font-font-bold ${isDetector ? 'text-blue' : 'text-orange'}`}>
-          {isDetector ? 'DETECTEUR' : 'EXTINCTEUR'}
+          {isDetector ? 'DÉTECTEUR' : 'EXTINCTEUR'}
         </div>
-        <div className='text-sm'>{product.room}</div>
+        <div className='text-sm capitalize'>{product.room.replace(/_+/g, ' ').toLowerCase()}</div>
         <div className='text-stale-light my-4 font-bold'>N°{product.id}</div>
         <img className='justify-center self-center mb-4' src={illu} alt='illustration' />
         <div
