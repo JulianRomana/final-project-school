@@ -5,9 +5,9 @@ import { ImageOverlay, MapContainer, MapContainerProps, Marker } from 'react-lea
 import { useHistory } from 'react-router-dom'
 import { MapAlertMenu, MapFilterMenu, MapHistoryMenu } from './components'
 import AlarmIcon from '/@/assets/alarmIcon.svg'
-import DetectorOnAlert from '/@/assets/detector-on-alert.svg'
+import DetectorOffline from '/@/assets/detector-offline.svg'
 import DetectorOnline from '/@/assets/detector-online.svg'
-import ExtinguisherOnAlert from '/@/assets/extinguisher-on-alert.svg'
+import ExtinguisherOffline from '/@/assets/extinguisher-offline.svg'
 import ExtinguisherOnline from '/@/assets/extinguisher-online.svg'
 import ExtinguisherIcon from '/@/assets/extinguisherIcon.svg'
 import AlertIcon from '/@/assets/images/alert.svg'
@@ -35,9 +35,9 @@ const mapConfig: MapContainerProps = {
 
 const icons: Record<string, string> = {
   FlexibilityOnline: ExtinguisherOnline,
-  FlexibilityOnAlert: ExtinguisherOnAlert,
+  FlexibilityOffline: ExtinguisherOffline,
   LuminosityOnline: DetectorOnline,
-  LuminosityOnAlert: DetectorOnAlert,
+  LuminosityOffline: DetectorOffline,
 }
 
 const ICON_SIZE = 25
@@ -50,7 +50,7 @@ const generateIcon = (name: string): Icon =>
 
 const filterList = [
   { name: 'online', label: 'En service', color: 'bg-evergreen' },
-  { name: 'on-alert', label: 'En alerte', color: 'bg-yellow' },
+  { name: 'offline', label: 'Hors service', color: 'bg-cloud' },
   { name: 'extinguisher', label: 'Extincteur', icon: ExtinguisherIcon },
   { name: 'detector', label: 'Detecteur', icon: AlarmIcon },
 ]
@@ -89,7 +89,7 @@ const MapPage: FC = () => {
       if (filters.includes('online')) {
         filtered = [...filtered, ...nodes.filter((node) => node.isActive === false)]
       }
-      if (filters.includes('on-alert')) {
+      if (filters.includes('offline')) {
         filtered = [...filtered, ...nodes.filter((node) => node.isActive == true)]
       }
       if (filters.includes('extinguisher')) {
@@ -182,7 +182,7 @@ const MapPage: FC = () => {
               <Marker
                 key={node.topic}
                 position={[node.coordinates.y + ICON_SIZE / 3, node.coordinates.x - ICON_SIZE / 4]}
-                icon={generateIcon(`${node._measurement}${node.isActive ? 'OnAlert' : 'Online'}`)}
+                icon={generateIcon(`${node._measurement}${node.isActive ? 'Offline' : 'Online'}`)}
                 eventHandlers={{
                   click: () => goToPage(node),
                 }}
