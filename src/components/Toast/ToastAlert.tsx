@@ -17,7 +17,7 @@ const ToastAlert: FC<ToastAlertProps> = ({ name, location, date }) => {
           <img src={ToastAlertIcon} alt='Toast alert icon' className='h-6 mr-2' />
           <div className='text-sm'>
             <h3 className='uppercase'>{name}</h3>
-            <p className='text-stale-light'>{location}</p>
+            <p className='text-stale-light capitalize'>{location.replace(/_+/g, ' ').toLowerCase()}</p>
           </div>
         </div>
         <div className='flex flex-col items-end justify-between text-right'>

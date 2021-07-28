@@ -5,9 +5,9 @@ import { ImageOverlay, MapContainer, MapContainerProps, Marker } from 'react-lea
 import { useHistory } from 'react-router-dom'
 import { MapAlertMenu, MapFilterMenu, MapHistoryMenu } from './components'
 import AlarmIcon from '/@/assets/alarmIcon.svg'
-import DetectorOffline from '/@/assets/detector-offline.svg'
+import DetectorOnAlert from '/@/assets/detector-on-alert.svg'
 import DetectorOnline from '/@/assets/detector-online.svg'
-import ExtinguisherOffline from '/@/assets/extinguisher-offline.svg'
+import ExtinguisherOnAlert from '/@/assets/extinguisher-on-alert.svg'
 import ExtinguisherOnline from '/@/assets/extinguisher-online.svg'
 import ExtinguisherIcon from '/@/assets/extinguisherIcon.svg'
 import AlertIcon from '/@/assets/images/alert.svg'
@@ -33,12 +33,10 @@ const mapConfig: MapContainerProps = {
 }
 
 const icons: Record<string, string> = {
-  Flexibility: ExtinguisherIcon,
-  Luminosity: AlarmIcon,
   FlexibilityOnline: ExtinguisherOnline,
-  FlexibilityOffline: ExtinguisherOffline,
+  FlexibilityOnAlert: ExtinguisherOnAlert,
   LuminosityOnline: DetectorOnline,
-  LuminosityOffline: DetectorOffline,
+  LuminosityOnAlert: DetectorOnAlert,
 }
 
 const ICON_SIZE = 25
@@ -49,15 +47,9 @@ const generateIcon = (name: string): Icon =>
     iconSize: [ICON_SIZE, ICON_SIZE],
   })
 
-const alerts = [
-  { name: 'Extincteur déplombé', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
-  { name: 'Extincteur déplombé', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
-  { name: 'Extincteur déplombé', location: 'Centre sportif', date: 'Thu Jul 22 2021 10:12:56' },
-]
-
 const filterList = [
-  { name: 'offline', label: 'Hors service', color: 'bg-cloud' },
   { name: 'online', label: 'En service', color: 'bg-evergreen' },
+  { name: 'on-alert', label: 'En alert', color: 'bg-yellow' },
   { name: 'extinguisher', label: 'Extincteur', icon: ExtinguisherIcon },
   { name: 'detector', label: 'Detecteur', icon: AlarmIcon },
 ]
@@ -93,10 +85,10 @@ const MapPage: FC = () => {
     let filtered: NodeType[] = []
 
     if (filters.length > 0) {
-      if (filters.includes('offline')) {
+      if (filters.includes('online')) {
         filtered = [...filtered, ...nodes.filter((node) => node.isActive === false)]
       }
-      if (filters.includes('online')) {
+      if (filters.includes('on-alert')) {
         filtered = [...filtered, ...nodes.filter((node) => node.isActive == true)]
       }
       if (filters.includes('extinguisher')) {
@@ -107,9 +99,9 @@ const MapPage: FC = () => {
       }
 
       return filtered
-    } else {
-      return nodes
     }
+
+    return nodes
   }, [filters, nodes])
 
   const handleFilterMenu = (): void => {
@@ -170,6 +162,10 @@ const MapPage: FC = () => {
     history.push(`/detector/${nodeId}`, node)
   }
 
+  const alerts = useMemo(() => {
+    return nodes.filter((node) => node.isActive === true)
+  }, [nodes])
+
   return (
     <>
       {!isLoading && (
@@ -183,7 +179,7 @@ const MapPage: FC = () => {
               <Marker
                 key={node.topic}
                 position={[node.coordinates.y + ICON_SIZE / 3, node.coordinates.x - ICON_SIZE / 4]}
-                icon={generateIcon(`${node._measurement}${node.isActive ? 'Online' : 'Offline'}`)}
+                icon={generateIcon(`${node._measurement}${node.isActive ? 'OnAlert' : 'Online'}`)}
                 eventHandlers={{
                   click: () => goToPage(node),
                 }}

@@ -57,7 +57,7 @@ const MapAlertMenu: FC<MapAlertMenuProps> = ({ active, alerts, setAlertTimeline,
         <div className='my-4 space-y-4'>
           {alerts.map((alert, index) => (
             <div key={`Alert_${index}`} className='alert__item transform translate-y-8 opacity-0'>
-              <ToastAlert name={alert.name} location={alert.location} date={alert.date} />
+              <ToastAlert name='Extincteur déplombé' location={alert.name} date={alert._time} />
             </div>
           ))}
         </div>
