@@ -21,8 +21,7 @@ const ToastAlert: FC<ToastAlertProps> = ({ name, location, date }) => {
           </div>
         </div>
         <div className='flex flex-col items-end justify-between text-right'>
-          <img src={ToastCloseIcon} alt='Toast close icon' className='h-3 w-3 cursor-pointer' />
-          <div className='leading-[14px] mt-2'>
+          <div className='leading-[14px] mt-auto'>
             <p className='text-onyx'>{format(new Date(date), 'HH:mm')}</p>
             <p className='text-stale-light'>{format(new Date(date), 'dd/MM/yyyy')}</p>
           </div>
