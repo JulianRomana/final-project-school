@@ -50,7 +50,7 @@ const generateIcon = (name: string): Icon =>
 
 const filterList = [
   { name: 'online', label: 'En service', color: 'bg-evergreen' },
-  { name: 'on-alert', label: 'En alert', color: 'bg-yellow' },
+  { name: 'on-alert', label: 'En alerte', color: 'bg-yellow' },
   { name: 'extinguisher', label: 'Extincteur', icon: ExtinguisherIcon },
   { name: 'detector', label: 'Detecteur', icon: AlarmIcon },
 ]
